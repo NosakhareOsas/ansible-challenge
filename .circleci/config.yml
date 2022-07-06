@@ -26,7 +26,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           # You can get this ID in the section where you registered the SSH Key
-          fingerprints: ["9f:30:c7:40:93:bb:41:68:d8:2e:4e:97:fa:0e:e9:a3"] 
+          fingerprints: ["42:9b:13:73:74:e3:6b:ad:14:2c:0f:76:28:f9:5e:e8"] 
       - run:
           name: Install Ansible
           command: |
@@ -34,6 +34,7 @@ jobs:
       - run:
           name: Run Playbook and Configure server 
           command: |
+              ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
               ansible-playbook main-remote.yml -i inventory
             
 
