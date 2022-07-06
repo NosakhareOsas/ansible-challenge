@@ -36,11 +36,10 @@ jobs:
           command: |
             apt-get install expect      
       - run:
-          name: Run Playbook and Configure server
-          expect:
-            command: |
+          name: Run Playbook and Configure server 
+          command: |
               ansible-playbook main-remote.yml -i inventory
-            !responses !First_question y
+            
 
 # Sequential workflow
 workflows:
