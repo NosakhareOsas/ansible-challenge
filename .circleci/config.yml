@@ -34,7 +34,6 @@ jobs:
       - run:
           name: Run Playbook and Configure server 
           command: |
-              ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no
               ansible-playbook main-remote.yml -i inventory
             
 
