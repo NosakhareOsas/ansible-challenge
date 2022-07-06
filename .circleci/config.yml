@@ -36,7 +36,8 @@ jobs:
           expect:
             command: |
               ansible-playbook main-remote.yml -i inventory
-            response: 'First Question in the prompt' : 'y'
+            responses: 
+              First_question: 'y'
 # Sequential workflow
 workflows:
   # Name the workflow
