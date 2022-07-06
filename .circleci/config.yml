@@ -33,9 +33,8 @@ jobs:
             apk add --update ansible     
       - run:
           name: Run Playbook and Configure server
-          expect: 
-            command: |
-                ansible-playbook main-remote.yml -i inventory
+          command: |
+              ansible-playbook main-remote.yml -i inventory
             
 
 # Sequential workflow
