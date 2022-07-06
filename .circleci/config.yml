@@ -39,11 +39,9 @@ jobs:
           name: Run Playbook and Configure server
           expect:
             command: |
-              
               ansible-playbook main-remote.yml -i inventory
-            responses: 
-              First_question: 
-                - 'y'
+            !responses !First_question "y"
+
 # Sequential workflow
 workflows:
   # Name the workflow
