@@ -1,0 +1,1 @@
+chmod 600 ansi_key.pem
