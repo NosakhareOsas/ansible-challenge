@@ -7,8 +7,6 @@ orbs:
 #define commands for reuseability
 commands:
    destroy_environment:
-      docker:
-        - image: amazon/aws-cli
       steps:
        - run:
            name: Destroy environment
@@ -71,7 +69,7 @@ jobs:
             fi
   smoke_test:
     docker:
-      - image: alpine:latest
+      - image: amazon/aws-cli
     steps:
       - run:
           name: Test job
