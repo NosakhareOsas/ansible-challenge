@@ -47,7 +47,6 @@ jobs:
       - run:
           name: Run Playbook and Configure server
           command: |
-              echo mid
               ansible-playbook main-remote.yml -i inventory
 
   smoke_test_if:
@@ -85,14 +84,10 @@ workflows:
   # Name the workflow
   myWorkflow:
     jobs:
-      - create_infrastructure
+      #- create_infrastructure
       - configure_infrastructure:
-          requires:
-            - create_infrastructure
       - smoke_test:
           requires: 
             - configure_infrastructure
-
-      #- configure_infrastructure
       
       
