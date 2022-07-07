@@ -13,7 +13,7 @@
   apt:
     autoremove: yes
 
-- name: "install nodejs abd npm"
+- name: "install nodejs and npm"
   become: yes
   apt:
     name: ["nodejs", "npm"]
