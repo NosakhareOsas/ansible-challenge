@@ -29,6 +29,13 @@ jobs:
               --template-file template.yml \
               --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region ${AWS_DEFAULT_REGION}
+      - run:
+          name: create inventory
+          command: |
+            echo [ec2Instances] > inventory; 
+            aws ec2 describe-instances \ 
+            --query 'Reservations[*].Instances[*].PublicIpAddress'  \  
+            --output text >> inventory;
   
   configure_infrastructure: 
     docker:
@@ -42,13 +49,7 @@ jobs:
           name: Install Ansible
           command: |
             apk add --update ansible 
-      - run:
-          name: create inventory
-          command: |
-            echo [ec2Instances] > inventory; 
-            aws ec2 describe-instances \ 
-            --query 'Reservations[*].Instances[*].PublicIpAddress'  \  
-            --output text >> inventory;
+      
       - run:
           name: Run Playbook and Configure server
           command: |
