@@ -4,6 +4,17 @@ orbs:
   # Choose either one of the orbs below
   #welcome: circleci/welcome-orb@0.4.1
   aws-cli: circleci/aws-cli@3.1
+#define commands for reuseability
+commands:
+   destroy_environment:
+     steps:
+       - run:
+           name: Destroy environment
+           # ${CIRCLE_WORKFLOW_ID} is a Built-in environment variable 
+           # ${CIRCLE_WORKFLOW_ID:0:5} takes the first 5 chars of the variable CIRCLE_CI_WORKFLOW_ID 
+           when: on_fail
+           command: |
+             aws cloudformation delete-stack --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7}
 # Define the jobs we want to run for this project
 jobs:
   create_infrastructure: 
@@ -16,7 +27,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file template.yml \
-              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:5} \
+              --stack-name myStack-${CIRCLE_WORKFLOW_ID:0:7} \
               --region ${AWS_DEFAULT_REGION}
   
   configure_infrastructure: 
@@ -36,7 +47,7 @@ jobs:
           command: |
               ansible-playbook main-remote.yml -i inventory
 
-  smoke_test:
+  smoke_test_if:
     docker:
       - image: alpine:latest
     steps:
@@ -54,6 +65,16 @@ jobs:
             else
               return 1
             fi
+  smoke_test:
+    docker:
+      - image: alpine:latest
+    steps:
+      - run:
+          name: Test job
+          # Fail the job intentionally to simulate an error.
+          command:  return 1
+      - destroy_environment
+          when: on_fail 
             
 
 # Sequential workflow
@@ -61,7 +82,9 @@ workflows:
   # Name the workflow
   myWorkflow:
     jobs:
-      #- create_infrastructure
+      - create_infrastructure:
+          requires: 
+            - smoke_test
       #- configure_infrastructure
-      - smoke_test
+      
       
