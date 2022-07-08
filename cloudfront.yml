@@ -4,6 +4,7 @@ Parameters:
     Description: Existing Bucket name
     Type: String
 
+
 Resources:
     CloudFrontOriginAccessIdentity:
       Type: "AWS::CloudFront::CloudFrontOriginAccessIdentity"
