@@ -1,0 +1,1 @@
+scp -i ansi_key.pem prometheus.yml ubuntu@ec2-52-90-153-109.compute-1.amazonaws.com:~/etc/prometheus
